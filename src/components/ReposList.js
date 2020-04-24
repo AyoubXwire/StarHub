@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { getRepos } from '../api'
 import InfiniteScroll from 'react-infinite-scroller'
 import Repo from './Repo'
+import Loader from './Loader'
 
 function ReposList() {
   const [repos, setRepos] = useState([])
@@ -34,11 +35,7 @@ function ReposList() {
       pageStart={0}
       loadMore={fetchRepos}
       hasMore={true}
-      loader={
-        <div className="loader" key={0}>
-          Loading...
-        </div>
-      }
+      loader={<Loader key={0} />}
     >
       {
         repos.map(item => (
