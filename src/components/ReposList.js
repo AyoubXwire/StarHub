@@ -4,7 +4,6 @@ import InfiniteScroll from 'react-infinite-scroller'
 import Repo from './Repo'
 
 function ReposList() {
-
   const [repos, setRepos] = useState([])
   const [startDate] = useState(monthEarlier)
 
@@ -22,8 +21,12 @@ function ReposList() {
   }
 
   async function fetchRepos(page) {
-    const result = await getRepos(startDate, page)
-    setRepos(repos.concat(result.items))
+    try {
+      const result = await getRepos(startDate, page)
+      setRepos(repos.concat(result.items))
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (

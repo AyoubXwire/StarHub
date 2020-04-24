@@ -1,0 +1,29 @@
+.card {
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+.avatar {
+  width: 5.4rem;
+  height: auto;
+  border-radius: 5%;
+}
+
+h2 {
+  margin: 0;
+}
+
+.avatar-container {
+  margin-right: 20px;
+}
+
+.stats-container {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.tag {
+  margin-right: 10px;
+}
