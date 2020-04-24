@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { getRepos } from '../api'
+import InfiniteScroll from 'react-infinite-scroller'
+import Repo from './Repo'
 
 function ReposList() {
 
-  const [fetching, setFetching] = useState(true)
   const [repos, setRepos] = useState([])
+  const [startDate] = useState(monthEarlier)
 
   useEffect(() => {
     fetchRepos()
@@ -19,26 +21,28 @@ function ReposList() {
     return formatedMonthearlier
   }
 
-  async function fetchRepos() {
-    const response = await getRepos(monthEarlier(), 1)
-    setRepos(response.items)
-    setFetching(false)
+  async function fetchRepos(page) {
+    const result = await getRepos(startDate, page)
+    setRepos(repos.concat(result.items))
   }
 
-  if (fetching) return (
-    <p>Loading..</p>
-  )
-
   return (
-    <div>
+    <InfiniteScroll
+      pageStart={0}
+      loadMore={fetchRepos}
+      hasMore={true}
+      loader={
+        <div className="loader" key={0}>
+          Loading...
+        </div>
+      }
+    >
       {
-        repos.map(repo => (
-          <div key={repo.id}>
-            <h3>{repo.name}</h3>
-          </div>
+        repos.map(item => (
+          <Repo key={item.id} repo={item} />
         ))
       }
-    </div>
+    </InfiniteScroll>
   )
 }
 
